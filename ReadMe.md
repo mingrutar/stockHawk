@@ -12,9 +12,9 @@ The screenshots were taken earlier.
 1. Added a detail panel that slides in when an item is clicked. The panel contains additional information about the symbol. **Glitch**: initially used Gridlayout, but later discovered that it did not display on some devices. Changed to use basic layout widgets.      
 
 ### Screenshots ###
-![alt](https://github.com/mingrutar/stockHawk/blob/master/screenShots/portait-detail.png?raw=true)
-![Portrait](https://github.com/mingrutar/stockHawk/blob/master/screenShots/portrait.png?raw=true)
-![dialog](https://github.com/mingrutar/stockHawk/blob/master/screenShots/add-dialog.png?raw=true)
-![RtoL](https://github.com/mingrutar/stockHawk/blob/master/screenShots/rtl-portrsit.png?raw=true)
+![withDetail](https://github.com/mingrutar/stockHawk/blob/master/screenShots/prtraint-detail.png?raw=true)
+![dialog](https://github.com/mingrutar/stockHawk/blob/master/screenShots/dialog.png?raw=true)
+![Portrait](https://github.com/mingrutar/stockHawk/blob/master/screenShots/dialog.png?raw=true)
+![RtoL](https://github.com/mingrutar/stockHawk/blob/master/screenShots/RtoL.png?raw=true)
 ![widget](https://github.com/mingrutar/stockHawk/blob/master/screenShots/widget.png?raw=true)
-![landscape](https://github.com/mingrutar/stockHawk/blob/master/screenShots/landscape.png?raw=true)  
+![landscape]()  
