@@ -14,7 +14,7 @@ The screenshots were taken earlier.
 ### Screenshots ###
 ![withDetail](https://github.com/mingrutar/stockHawk/blob/master/screenShots/prtraint-detail.png?raw=true)
 ![dialog](https://github.com/mingrutar/stockHawk/blob/master/screenShots/dialog.png?raw=true)
-![Portrait](https://github.com/mingrutar/stockHawk/blob/master/screenShots/dialog.png?raw=true)
+![Portrait](https://github.com/mingrutar/stockHawk/blob/master/screenShots/prtraint.png?raw=true)
 ![RtoL](https://github.com/mingrutar/stockHawk/blob/master/screenShots/RtoL.png?raw=true)
-![widget](https://github.com/mingrutar/stockHawk/blob/master/screenShots/widget.png?raw=true)
-![landscape]()  
+![widget](https://github.com/mingrutar/stockHawk/blob/master/screenShots/widgets.png?raw=true)
+![landscape](https://github.com/mingrutar/stockHawk/blob/master/screenShots/land.png?raw=true)  
