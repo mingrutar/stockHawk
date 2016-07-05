@@ -16,5 +16,5 @@
 ![dialog](https://github.com/mingrutar/stockHawk/blob/master/screenShots/dialog.png?raw=true)
 ![Portrait](https://github.com/mingrutar/stockHawk/blob/master/screenShots/prtraint.png?raw=true)
 ![RtoL](https://github.com/mingrutar/stockHawk/blob/master/screenShots/RtoL.png?raw=true)
-![widget](https://github.com/mingrutar/stockHawk/blob/master/screenShots/widgets.png?raw=true)
 ![landscape](https://github.com/mingrutar/stockHawk/blob/master/screenShots/land.png?raw=true)  
+![widget](https://github.com/mingrutar/stockHawk/blob/master/screenShots/widgets.png?raw=true)
