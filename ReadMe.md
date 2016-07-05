@@ -5,11 +5,11 @@
 
 ### Description of work ###
 The screenshots were taken earlier.
-1. Improved the UI with material design features, such as color choice, CollapsingToolbarLayout, etc. See screenshots
-1. Added widget. **Glitch**: initially designed with ListView and RemoteViewsService. But the RemoteViewsService did not update the widget (seems like a bug in RemoteViewsService). Changed to use basic layout widgets with IntentService.
-1. Fixed the crashing bug and added empty list page. Removed the feature of automatically adding initial symbols when the list is empty.
-1. Added RtoL capability and accessibility.
-1. Added a detail panel that slides in when an item is clicked. The panel contains additional information about the symbol. **Glitch**: initially used Gridlayout, but later discovered that it did not display on some devices. Changed to use basic layout widgets.      
+1) Improved the UI with material design features, such as color choice, CollapsingToolbarLayout, etc. See screenshots
+2) Added widget. **Glitch**: initially designed with ListView and RemoteViewsService. But the RemoteViewsService did not update the widget (seems like a bug in RemoteViewsService). Changed to use basic layout widgets with IntentService.
+3) Fixed the crashing bug and added empty list page. Removed the feature of automatically adding initial symbols when the list is empty.
+4) Added RtoL capability and accessibility.
+5) Added a detail panel that slides in when an item is clicked. The panel contains additional information about the symbol. **Glitch**: initially used Gridlayout, but later discovered that it did not display on some devices. Changed to use basic layout widgets.      
 
 ### Screenshots ###
 ![withDetail](https://github.com/mingrutar/stockHawk/blob/master/screenShots/prtraint-detail.png?raw=true)
