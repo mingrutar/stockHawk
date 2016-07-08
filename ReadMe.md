@@ -3,10 +3,12 @@
 ### See assignment details at ###
    https://classroom.udacity.com/nanodegrees/nd801/parts/8011345406/modules/430205859175461/lessons/4302058591239847/concepts/42882736840923
 The screenshots of the original work
+
 ![portrait](https://github.com/mingrutar/stockHawk/blob/master/screenShots/v0-portrait.png?raw=true)
 ![landscape](https://github.com/mingrutar/stockHawk/blob/master/screenShots/v0-landscape.png?raw=true)
 
 ### Description of work ###
+
 * added a fragment for stock plot of selected symbol.  * Improved the UI with material design features, such as color choice, CollapsingToolbarLayout, etc. See screenshots
 * Added widget. *Glitch*: initially designed with ListView and RemoteViewsService. But the RemoteViewsService did not update the widget (seems like a bug in RemoteViewsService). Changed to use basic layout widgets with IntentService.
 * Fixed the crashing bug and added empty list page. Removed the feature of automatically adding initial symbols when the list is empty.
@@ -14,10 +16,10 @@ The screenshots of the original work
 
 ### Screenshots ###
 ![portraitDetail](https://github.com/mingrutar/stockHawk/blob/master/screenShots/v2-portrait-detail.png?raw=true)
-![landDetail](https://github.com/mingrutar/stockHawk/blob/master/screenShots/v2-landscape-detail.png?raw=true)
 ![Portrait](https://github.com/mingrutar/stockHawk/blob/master/screenShots/v2-portrait.png?raw=true)
-![landscape](https://github.com/mingrutar/stockHawk/blob/master/screenShots/v2-landscape.png?raw=true)
-![dialog](https://github.com/mingrutar/stockHawk/blob/master/screenShots/dialog.png?raw=true)
-![landDetailText](https://github.com/mingrutar/stockHawk/blob/master/screenShots/v2-landscape-detail2.png?raw=true)
 ![RtoL](https://github.com/mingrutar/stockHawk/blob/master/screenShots/RtoL.png?raw=true)
+![landDetail](https://github.com/mingrutar/stockHawk/blob/master/screenShots/v2-landscape-detail.png?raw=true)
+![landscape](https://github.com/mingrutar/stockHawk/blob/master/screenShots/v2-landscape.png?raw=true)
+![landDetailText](https://github.com/mingrutar/stockHawk/blob/master/screenShots/v2-landscape-detail2.png?raw=true)
+![dialog](https://github.com/mingrutar/stockHawk/blob/master/screenShots/dialog.png?raw=true)
 ![widget](https://github.com/mingrutar/stockHawk/blob/master/screenShots/widgets.png?raw=true)
