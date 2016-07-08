@@ -16,11 +16,11 @@ The screenshots of the original work
 * Added RtoL capability and accessibility.
 
 ### Screenshots ###
-![portraitDetail](https://github.com/mingrutar/stockHawk/blob/master/screenShots/v2-portrait-detail.png?raw=true)
 ![Portrait](https://github.com/mingrutar/stockHawk/blob/master/screenShots/v2-portrait.png?raw=true)
-![RtoL](https://github.com/mingrutar/stockHawk/blob/master/screenShots/RtoL.png?raw=true)
+![portraitDetail](https://github.com/mingrutar/stockHawk/blob/master/screenShots/v2-portrait-detail.png?raw=true)
+![dialog](https://github.com/mingrutar/stockHawk/blob/master/screenShots/dialog.png?raw=true)
 ![landDetailText](https://github.com/mingrutar/stockHawk/blob/master/screenShots/v2-landscape-detail2.png?raw=true)
 ![widget](https://github.com/mingrutar/stockHawk/blob/master/screenShots/widgets.png?raw=true)
 ![landDetail](https://github.com/mingrutar/stockHawk/blob/master/screenShots/v2-landscape-detail.png?raw=true)
 ![landscape](https://github.com/mingrutar/stockHawk/blob/master/screenShots/v2-landscape.png?raw=true)
-![dialog](https://github.com/mingrutar/stockHawk/blob/master/screenShots/dialog.png?raw=true)
+![RtoL](https://github.com/mingrutar/stockHawk/blob/master/screenShots/RtoL.png?raw=true)
