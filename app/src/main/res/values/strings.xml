@@ -18,12 +18,16 @@
     <string name="low">Low</string>
     <string name="high">High</string>
     <string name="year">Year</string>
-    <string name="moving_ave">Moving Ave</string>
-    <string name="ma_50_days">50 Days</string>
-    <string name="ma_200_days">200 Days</string>
     <string name="backdrop_image">backdrop image</string>
     <string name="toolbar">toolbar</string>
     <string name="button_for_adding_new_stock_symbol">button for adding new stock symbol</string>
     <string name="company_name_and_symbol">company name and symbol</string>
     <string name="volume">Volume</string>
+    <string name="select">Select</string>
+
+    <string-array name="unit_arrays">
+        <item>Day</item>
+        <item>Month</item>
+        <item>Year</item>
+    </string-array>
 </resources>

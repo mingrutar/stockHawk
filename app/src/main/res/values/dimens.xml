@@ -4,10 +4,21 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="margin_4dp">4dp</dimen>
+    <dimen name="gap_4dp">4dp</dimen>
+    <dimen name="gap_6dp">6dp</dimen>
+    <dimen name="gap_8dp">8dp</dimen>
+    <dimen name="gap_20dp">20dp</dimen>
+
+    <dimen name="textSmaller">16sp</dimen>
+    <dimen name="textSmall">18sp</dimen>
+    <dimen name="textNormal">20sp</dimen>
+    <dimen name="textLarger">22sp</dimen>
+    <dimen name="size_large">30sp</dimen>
 
     <dimen name="widget_margin">6dp</dimen>
+    <dimen name="edit_view_width">24dp</dimen>
     <dimen name="value_text_width">60dp</dimen>
+
     <dimen name="widget_quotes_default_width">250dp</dimen>
     <dimen name="widget_quotes_default_height">140dp</dimen>
     <dimen name="widget_quotes_min_resize_width">220dp</dimen>

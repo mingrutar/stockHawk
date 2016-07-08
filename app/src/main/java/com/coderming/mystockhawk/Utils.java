@@ -5,9 +5,13 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Build;
 import android.preference.PreferenceManager;
+import android.support.annotation.ColorInt;
 import android.support.annotation.IntDef;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
+import android.widget.TextView;
 
 import com.coderming.mystockhawk.data.QuoteColumns;
 import com.coderming.mystockhawk.data.QuoteProvider;
@@ -252,5 +256,14 @@ public class Utils {
         String fmt = isUp ? FORMATTER_POS_CHANGE : FORMATTER_NEG_CHANGE;
 //        String fmt = isUp ? context.getString(R.string.format_change) : context.getString(R.string.neg_format_change);
         return String.format(fmt, percentF, changeF);
+    }
+    public static final void setPriceText(Context context, String changeStr, boolean isUp, TextView mTextView) {
+        int colorId = isUp ? R.color.up_text : R.color.down_text;
+        @ColorInt
+        int color = (Build.VERSION.SDK_INT < 23) ? context.getResources().getColor(colorId)
+                : ContextCompat.getColor(context, colorId);
+        mTextView.setTextColor(color);
+        mTextView.setText(changeStr);
+        mTextView.setContentDescription(changeStr);
     }
 }

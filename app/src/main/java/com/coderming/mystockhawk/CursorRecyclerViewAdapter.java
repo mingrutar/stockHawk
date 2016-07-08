@@ -3,9 +3,6 @@ package com.coderming.mystockhawk;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.DataSetObserver;
-import android.os.Build;
-import android.support.annotation.ColorInt;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -103,21 +100,16 @@ public class CursorRecyclerViewAdapter
             throw new IllegalStateException("This should only be called when Cursor is valid");
         }
         mCursor.moveToPosition(position);
-        String str = mCursor.getString(mCursor.getColumnIndex("symbol"));
+        String str = mCursor.getString(mCursor.getColumnIndex(QuoteColumns.SYMBOL));
         viewHolder.mSymbol.setText(str);
         viewHolder.mSymbol.setContentDescription(str);
-        String priceStr = Utils.getPriceStr(mContext, mCursor.getString(mCursor.getColumnIndex("bid_price")));
+        String priceStr = Utils.getPriceStr(mContext, mCursor.getString(mCursor.getColumnIndex(QuoteColumns.BIDPRICE)));
         viewHolder.mBidPrice.setText(priceStr);
         viewHolder.mBidPrice.setContentDescription(priceStr);
-        boolean isUp = (mCursor.getInt(mCursor.getColumnIndex("is_up")) == 1);
-        int colorId = isUp ? R.color.up_text :R.color.down_text;
-        @ColorInt  int color = (Build.VERSION.SDK_INT < 23)?mContext.getResources().getColor(colorId)
-                : ContextCompat.getColor(mContext, colorId);
-        viewHolder.mChange.setTextColor(color);
-        String changeStr = Utils.getChangeStr(mContext, isUp,  mCursor.getString(mCursor.getColumnIndex("percent_change"))
-                , mCursor.getString(mCursor.getColumnIndex("change")) ) ;
-        viewHolder.mChange.setText(changeStr);
-        viewHolder.mChange.setContentDescription(changeStr);
+        boolean isUp = (mCursor.getInt(mCursor.getColumnIndex(QuoteColumns.ISUP)) == 1);
+        String changeStr = Utils.getChangeStr(mContext, isUp,  mCursor.getString(mCursor.getColumnIndex(QuoteColumns.PERCENT_CHANGE))
+                , mCursor.getString(mCursor.getColumnIndex(QuoteColumns.CHANGE)) ) ;
+        Utils.setPriceText(mContext, changeStr, isUp, viewHolder.mChange);
     }
 
     public Cursor swapCursor(Cursor newCursor){

@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center_vertical"
-    android:orientation="horizontal"
+    android:minHeight="@dimen/size_large"
     android:background="@drawable/touch_selector"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingEnd="@dimen/activity_horizontal_margin"
-    android:paddingStart="@dimen/activity_horizontal_margin"  >
+    android:paddingLeft="@dimen/gap_8dp"
+    android:paddingRight="@dimen/gap_8dp" >
     <TextView
         android:id="@+id/stock_symbol"
+        android:text="GOOG"
         style="@style/StockSymbolTextStyle"  />
     <TextView
         android:id="@+id/bid_price"
+        android:text="123.23"
         style="@style/BidPriceTextStyle"  />
     <TextView
         android:id="@+id/change"
+        android:text="2.12%(2.33)"
         style="@style/PercentChangeTextStyle"
         android:textColor="@color/up_text"   />
 </RelativeLayout>

@@ -7,14 +7,15 @@ import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.design.widget.BottomSheetBehavior;
+import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -43,12 +44,12 @@ import com.google.android.gms.gcm.GcmNetworkManager;
 import com.google.android.gms.gcm.PeriodicTask;
 import com.google.android.gms.gcm.Task;
 
-public class MainActivity extends AppCompatActivity implements
-        LoaderManager.LoaderCallbacks<Cursor>  {
+public class MainActivity extends AppCompatActivity
+        implements LoaderManager.LoaderCallbacks<Cursor>  {
     private String LOG_TAG = MainActivity.class.getSimpleName();
+    private static final String DETAILFRAGMENT_TAG = "DETAILFRAGMENT_TAG";
 
     static final int CURSOR_LOADER_ID = 0;
-    static final int DETAIL_LOADER_ID = 2;
     static final String SELECTED_SYMBOL = "SelectedSymbol";
 
     public static final String TAG_PERIODIC = "periodic";
@@ -58,8 +59,6 @@ public class MainActivity extends AppCompatActivity implements
     private static final long SYNC_INTERVAL = 3600L;            // in msec?
     private static final long SYNC_FLEXTIME = 10L;             // in msec?
 
-    long flex = 10L;
-
     String mSelectedSymbol;
     PeriodicTask mPeriodicTask;
 
@@ -68,8 +67,12 @@ public class MainActivity extends AppCompatActivity implements
 
     private Intent mServiceIntent;
     private FloatingActionButton mFab;
-    private BottomSheetBehavior mBottomSheetBehavior;
-    private Loader<Cursor> mDetailLoader;
+
+    private TicketActivityFragment mFragment;
+    private AppBarLayout mAppBarLayout;
+    private View mDetailPanel;
+    private int mPanelWidth;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,7 +85,6 @@ public class MainActivity extends AppCompatActivity implements
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        loadBackdrop();
 
         if ((savedInstanceState != null) && savedInstanceState.containsKey(SELECTED_SYMBOL)) {
             mSelectedSymbol = savedInstanceState.getString(SELECTED_SYMBOL);
@@ -95,17 +97,34 @@ public class MainActivity extends AppCompatActivity implements
         mAdapter = new CursorRecyclerViewAdapter(this, mSymbolSelectionListener);
         mRecyclerView.setAdapter(mAdapter);
 
-        View bottomSheet = findViewById( R.id.detail_sheet );
-        assert (bottomSheet != null);
-        mBottomSheetBehavior = BottomSheetBehavior.from(bottomSheet);
-        View btview = findViewById(R.id.btn_collapse);
-        assert (btview!= null);
-        btview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                removeDetailPane();
-            }
-        });
+        mAppBarLayout = (AppBarLayout) findViewById(R.id.appbar);
+        assert (mAppBarLayout != null);
+
+        if (findViewById(R.id.collapsing_toolbar) != null) {
+            loadBackdrop();
+            mAppBarLayout.setExpanded(true);
+        }
+
+        mDetailPanel =  findViewById(R.id.detail_container);
+        mFragment = new TicketActivityFragment();
+
+        final View containerView = findViewById(R.id.content_container);
+        assert (containerView != null);
+        ViewTreeObserver vto = containerView.getViewTreeObserver();
+        if ((vto != null) && vto.isAlive()) {
+            vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+                @Override
+                public boolean onPreDraw() {
+                    containerView.getViewTreeObserver().removeOnPreDrawListener(this);
+                    mPanelWidth = containerView.getWidth();
+                    if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                        mPanelWidth /= 2;
+                    }
+                    return true;
+                }
+            });
+        }
+
         mFab = (FloatingActionButton) findViewById(R.id.fab);
         assert (mFab != null);
         setupFab(mFab);
@@ -114,27 +133,61 @@ public class MainActivity extends AppCompatActivity implements
         getLoaderManager().initLoader(CURSOR_LOADER_ID, null, this );
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        removeDetailPane();
+    }
     private  CursorRecyclerViewAdapter.QuoteAdapterOnClickHandler mSymbolSelectionListener =
         new CursorRecyclerViewAdapter.QuoteAdapterOnClickHandler() {
             @Override
             public void onClick(String symbol, CursorRecyclerViewAdapter.QuoteViewHolder vh) {
                 mSelectedSymbol = symbol;
-                Bundle args = new Bundle();
-                args.putString(SELECTED_SYMBOL, symbol);
-                if (mDetailLoader == null) {
-                    getLoaderManager().initLoader(DETAIL_LOADER_ID, args, MainActivity.this);
-                } else {
-                    getLoaderManager().restartLoader(DETAIL_LOADER_ID, args, MainActivity.this);
-                }
+                toggleHasDetail(mSelectedSymbol);
             }
 
         };
     private void removeDetailPane() {
-        Log.v(LOG_TAG, "++ removeDetailPane");
-        if ((mBottomSheetBehavior != null)&&(BottomSheetBehavior.STATE_EXPANDED == mBottomSheetBehavior.getState())) {
-            mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(DETAILFRAGMENT_TAG) ;
+        if (( null != fragment ) && (fragment == mFragment)) {
+            mFab.setImageResource(R.drawable.ic_add_black_24dp);
+            Log.v(LOG_TAG, "+=+=+= removing detail ...");
+            getSupportFragmentManager().beginTransaction().remove(mFragment).commit();
+            if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                mDetailPanel.getLayoutParams().width = 0;
+            } else {                            // portrait has CollapseBar
+                mAppBarLayout.setExpanded(true);
+            }
+        } else {
+            Log.v(LOG_TAG, "+=+=+= no detail ...");
         }
     }
+
+    private void toggleHasDetail(String symbol ) {
+        Fragment fragment = getSupportFragmentManager().findFragmentByTag(DETAILFRAGMENT_TAG) ;
+        if (( null != fragment ) && (fragment == mFragment)) {
+            mFragment.updateData(symbol);
+        } else {
+            Log.v(LOG_TAG, "+=+=+= onClick addiing detail. symbol="+symbol);
+            boolean isLanscape = (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE);
+            if (isLanscape) {
+                mDetailPanel.getLayoutParams().width = mPanelWidth;
+            }
+            Bundle bundle = new Bundle();
+            bundle.putString(TicketActivityFragment.SYMBOL_ARG, symbol);
+            mFragment.setArguments(bundle);
+            getSupportFragmentManager().beginTransaction()
+                    .add(R.id.detail_container, mFragment, DETAILFRAGMENT_TAG)
+                    .commit();
+            if (!isLanscape) {
+                mAppBarLayout.setExpanded(false);
+                mFab.setImageResource(R.drawable.ic_to_bottom_black_24dp);
+            } else {
+                mFab.setImageResource(R.drawable.ic_to_right_black_24dp);
+            }
+        }
+    }
+
     BroadcastReceiver mBroadcastReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -153,33 +206,37 @@ public class MainActivity extends AppCompatActivity implements
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                removeDetailPane();
-                final Context context = v.getContext();
-                final EditText input = new EditText(context);
-                input.setInputType(InputType.TYPE_CLASS_TEXT);
-                final AlertDialog dlg = new AlertDialog.Builder(context, R.style.MyAlertDialogStyle)
-                        .setTitle("Symbol Search").setMessage("Enter a stock symbol:")
-                        .setView(input).setPositiveButton("OK", null).setNegativeButton("Cancel", null)
-                        .create();
-                dlg.setOnShowListener(new DialogInterface.OnShowListener() {
+                Fragment fragment = getSupportFragmentManager().findFragmentByTag(DETAILFRAGMENT_TAG) ;
+                if (( null != fragment ) && (fragment == mFragment)) {      //
+                    removeDetailPane();
+                } else {
+                    final Context context = v.getContext();
+                    final EditText input = new EditText(context);
+                    input.setInputType(InputType.TYPE_CLASS_TEXT);
+                    final AlertDialog dlg = new AlertDialog.Builder(context, R.style.MyAlertDialogStyle)
+                            .setTitle("Symbol Search").setMessage("Enter a stock symbol:")
+                            .setView(input).setPositiveButton("OK", null).setNegativeButton("Cancel", null)
+                            .create();
+                    dlg.setOnShowListener(new DialogInterface.OnShowListener() {
 
-                    @Override
-                    public void onShow(DialogInterface dialog) {
-                        Button b = dlg.getButton(AlertDialog.BUTTON_POSITIVE);
-                        b.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                String symbol = input.getText().toString().toUpperCase();
-                                if (isNewSymbol(v, symbol)) {
-                                    dlg.dismiss();
-                                } else {
-                                    input.setText("");
+                        @Override
+                        public void onShow(DialogInterface dialog) {
+                            Button b = dlg.getButton(AlertDialog.BUTTON_POSITIVE);
+                            b.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    String symbol = input.getText().toString().toUpperCase();
+                                    if (isNewSymbol(v, symbol)) {
+                                        dlg.dismiss();
+                                    } else {
+                                        input.setText("");
+                                    }
                                 }
-                            }
-                        });
-                    }
-                });
-                dlg.show();
+                            });
+                        }
+                    });
+                    dlg.show();
+                }
             }
         });
     }
@@ -266,11 +323,11 @@ public class MainActivity extends AppCompatActivity implements
             outState.putString(SELECTED_SYMBOL, mSelectedSymbol);
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-//        unregisterReceiver(mBroadcastReceiver);
-    }
+//    @Override
+//    protected void onDestroy() {
+//        super.onDestroy();
+////        unregisterReceiver(mBroadcastReceiver);
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -304,14 +361,6 @@ public class MainActivity extends AppCompatActivity implements
                     QuoteColumns.ISCURRENT + " = ?",
                     new String[]{"1"},
                     null);
-        } else if ((DETAIL_LOADER_ID == id) && (args != null)) {
-            String symbol = args.getString(SELECTED_SYMBOL);
-            Uri uri = QuoteProvider.Quotes.withSymbol(symbol);
-            Log.v(LOG_TAG, String.format("+++ onCreateLoader, id=%d, uri=%s", id, uri.toString()));
-            mDetailLoader = new CursorLoader(this, uri, DetailProjection,
-                    QuoteColumns.SYMBOL + "=?", new String[]{symbol}, null);
-            return mDetailLoader;
-
         } else {
             return null;
         }
@@ -350,45 +399,8 @@ public class MainActivity extends AppCompatActivity implements
                     }
                 });
             }
-        }  else if (DETAIL_LOADER_ID == loader.getId()) {
-            if (data.moveToFirst()) {
-                int colNum = 0;
-                String symbol = data.getString(colNum++);       // symbol
-                TextView tv = (TextView) findViewById(R.id.detail_symbol);
-                tv.setText(symbol);
-                tv.setContentDescription(symbol);
-                String name = data.getString(colNum++);         // name
-                tv = (TextView) findViewById(R.id.detail_title);
-                tv.setText(name);
-                tv.setContentDescription(name);
-//                str = Integer.toString(data.getInt(colNum++));    // volume is int
-//                tv = (TextView) findViewById(R.id.volume_data);
-//                tv.setText(str);
-//                tv.setContentDescription(str);
-
-                for (int rid : tvColMap) {
-                    View view = findViewById(rid);
-                    if (view != null) {
-                        Float val = data.getFloat(colNum++);
-                        if (val != null) {
-                            tv = (TextView) view;
-                            tv.setText(Float.toString(val));
-                            tv.setContentDescription(Float.toString(val));
-                        }
-                    }
-                }
-                mBottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-            }
         }
     }
-    private static final String[] DetailProjection = new String[] {
-            QuoteColumns.SYMBOL, QuoteColumns.NAME, QuoteColumns.VOLUME,
-            QuoteColumns.DAYSLOW, QuoteColumns.DAYSHIGH,
-            QuoteColumns.YEARLOW, QuoteColumns.YEARHIGH,
-            QuoteColumns.FIFTYDAYMOVINGAVERAGE, QuoteColumns.TWOHUNDREDDAYMOVINGAVERAGE};
-    private static final int[] tvColMap = new int[] {       //R.id.tv, idx is colNum of cursor, start 2
-            R.id.days_low_data, R.id.days_high_data, R.id.year_low_data,
-            R.id.year_high_data, R.id.fifty_ma_data, R.id.two_hundred_ma_data};
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         mAdapter.swapCursor(null);

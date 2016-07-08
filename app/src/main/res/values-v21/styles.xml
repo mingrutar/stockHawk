@@ -2,6 +2,7 @@
     <style name="AppTheme" parent="Base.Theme">
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
+
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -9,6 +10,10 @@
         <item name="windowNoTitle">true</item>
         <item name="android:windowDrawsSystemBarBackgrounds">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
+
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowEnterTransition">@transition/slide_right</item>
+        <item name="android:windowTransitionBackgroundFadeDuration">900</item>
     </style>
 
     <style name="MyTitleTextStyle">
@@ -23,4 +28,5 @@
         <item name="android:background">@color/primary_dark</item>
         <item name="android:textColor">@color/grey_100</item>
     </style>
+
 </resources>
