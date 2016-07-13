@@ -35,6 +35,7 @@
                 android:scaleType="centerCrop"
                 android:contentDescription="@string/backdrop_image"
                 android:fitsSystemWindows="true"
+                android:src="@drawable/stock_image"
                 app:layout_collapseMode="parallax" />
 
             <android.support.v7.widget.Toolbar
