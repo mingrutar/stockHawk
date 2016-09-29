@@ -3,10 +3,7 @@
 ### See assignment details at ###
    https://classroom.udacity.com/nanodegrees/nd801/parts/8011345406/modules/430205859175461/lessons/4302058591239847/concepts/42882736840923
 
-The project starts with base code that is not production ready: limited function, occasional crash, etc. See screenshots of the original work
-
-![portrait](https://github.com/mingrutar/stockHawk/blob/master/screenShots/v0-portrait.png?raw=true)
-![landscape](https://github.com/mingrutar/stockHawk/blob/master/screenShots/v0-landscape.png?raw=true)
+The project starts with base code that is not production ready: limited function, occasional crash, etc.
 
 ### Description of work ###
 
@@ -21,6 +18,13 @@ The project starts with base code that is not production ready: limited function
 * Fixed bugs and tighten up the app for production
 
 ### Screenshots ###
+##### Before #####
+
+![portrait](https://github.com/mingrutar/stockHawk/blob/master/screenShots/v0-portrait.png?raw=true)
+![landscape](https://github.com/mingrutar/stockHawk/blob/master/screenShots/v0-landscape.png?raw=true)
+
+##### After #####
+
 __Portrait Views__
 
 ![Portrait](https://github.com/mingrutar/stockHawk/blob/master/screenShots/v2-portrait.png?raw=true)
