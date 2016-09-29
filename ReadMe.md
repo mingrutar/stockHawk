@@ -18,19 +18,15 @@ The project starts with base code that is not production ready: limited function
 * Fixed bugs and tighten up the app for production
 
 ### Screenshots ###
-##### Before #####
+#### Before ####
 
 ![portrait](https://github.com/mingrutar/stockHawk/blob/master/screenShots/v0-portrait.png?raw=true)
 ![landscape](https://github.com/mingrutar/stockHawk/blob/master/screenShots/v0-landscape.png?raw=true)
 
-##### After #####
-
-__Portrait Views__
+#### After ####
 
 ![Portrait](https://github.com/mingrutar/stockHawk/blob/master/screenShots/v2-portrait.png?raw=true)
 ![portraitDetail](https://github.com/mingrutar/stockHawk/blob/master/screenShots/v2-portrait-detail.png?raw=true)
-
-__Landscape Views__
 
 ![landscape](https://github.com/mingrutar/stockHawk/blob/master/screenShots/v2-landscape.png?raw=true)
 ![landDetail](https://github.com/mingrutar/stockHawk/blob/master/screenShots/v2-landscape-detail.png?raw=true)
